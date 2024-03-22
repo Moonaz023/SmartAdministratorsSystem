@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<div th:include="~{link.html}"></div>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+	<link rel="stylesheet" th:href="@{/css/editForm.css}" />
+
+
+</head>
+
+<body>
+	<style>
+		.student_edit_form {
+			width: 400px;
+			margin: 0 auto;
+			padding: 20px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			background-color: #f9f9f9;
+		}
+
+		.student_edit_form label {
+			font-weight: bold;
+		}
+
+		.student_edit_form input[type="text"] {
+			width: 100%;
+			padding: 8px;
+			margin-bottom: 10px;
+			box-sizing: border-box;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		.student_edit_form button {
+			padding: 10px 20px;
+
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+		.student_edit_form button:hover {
+			background-color: #45a049;
+		}
+	</style>
+	<div id="editFormContainer" style="display: none;"></div>
+
+	<div class="container">
+
+		<form id="formAllStudent" name="formAllStudent" class="student-form" th:action="@{/admin/insertStudent}"
+			method="post">
+			<div class="row">
+				<div class="col-sm-4">
+					<h4>Insert Student</h4>
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Roll</label>
+					<input type="text" class="form-control" name="roll" id="inputEmail3" placeholder="Roll">
+
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Session</label>
+					<input type="text" class="form-control" name="session" id="inputEmail3" placeholder="Session">
+
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Registration</label>
+					<input type="text" class="form-control" name="registration" id="inputEmail3"
+						placeholder="Registration">
+
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
+					<input type="text" class="form-control" name="name" id="inputEmail3" placeholder="Name">
+
+
+					<div class="form-group">
+						<button type="button" id="insertStudent" class="btn btn-success">Save</button>
+						<button type="button" class="btn btn-primary">Reset</button>
+					</div>
+				</div>
+
+				<div class="col-sm-8">
+					<h3>Student Record</h3>
+					<br>
+					<table id="allStudent" class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">Roll</th>
+								<th scope="col">Name</th>
+								<th scope="col">Session</th>
+								<th scope="col">Registration</th>
+								<th scope="col">Edit</th>
+								<th scope="col">Delete</th>
+							</tr>
+						</thead>
+						<tbody id="allStudent_tableresult">
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</form>
+		<h3 id="totalAmount"></h3>
+
+		<h1>Insert Student Details</h1>
+
+
+		<form id="csvuploadForm" enctype="multipart/form-data">
+			<input type="file" id="csvFile" accept=".csv" required><br>
+			<button type="submit" class="btn btn-success">Upload</button>
+		</form>
+
+
+
+
+
+	</div>
+
+	<script src="/js/allStudent.js"></script>
+</body>
+
+</html>

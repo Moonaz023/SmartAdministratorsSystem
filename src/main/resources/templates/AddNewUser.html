@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Save User Form</title>
+
+</head>
+
+<body>
+	<style>
+		.card-body {
+			padding: 20px;
+			width: 50%;
+			margin: auto;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		}
+
+		.form-control {
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 15px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-sizing: border-box;
+		}
+
+		.form-control:focus {
+			outline: none;
+			border-color: #007bff;
+			box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+		}
+	</style>
+	<div class="card-body">
+		<form id="userForm">
+			<div class="mb-3">
+
+				<label>Roll</label>
+				<input type="text" name="name" class="form-control">
+			</div>
+			<div class="mb-3">
+				<label>Enter Email</label>
+				<input type="text" name="email" class="form-control">
+			</div>
+			<div class="mb-3">
+				<label>Enter Password</label>
+				<input type="text" name="password" class="form-control">
+			</div>
+			<button type="submit" class="btn btn-primary col-md-12">Register</button>
+		</form>
+	</div>
+	<form id="csvuserForm" enctype="multipart/form-data">
+		<input type="file" id="csvuser" accept=".csv" required><br>
+		<button type="submit" class="btn btn-success">Upload</button>
+	</form>
+	<script>
+		$(document).ready(function () {
+			$('#userForm').submit(function (event) {
+				// Prevent default form submission
+				event.preventDefault();
+
+				// Serialize form data
+				var formx = $("#userForm");
+
+				// AJAX POST request to save user data
+				$.ajax({
+					type: 'POST',
+					url: '/admin/saveUser',
+					data: formx.serialize(),
+					success: function (userinsertresponse) {
+						$("#userForm")[0].reset();
+						console.log('User saved successfully');
+					},
+					error: function (xhr, status, error) {
+						// Handle error response
+						console.error('Error:', error);
+					}
+				});
+			});
+
+			
+		});
+		
+			$(document).ready(function () {
+		
+			 // Handle submission of csvuserForm
+        $('#csvuserForm').submit(function (event) {
+            event.preventDefault();
+			
+            var files = $('#csvuser')[0].files;
+            
+
+            var formData = new FormData();
+            formData.append('file', files[0]);
+
+            $.ajax({
+                url: '/admin/insert_CSV_user',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (saveuser) {
+                    alert('Data inserted successfully');
+                    $("#csvuserForm")[0].reset();
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error uploading CSV file:', error);
+                }
+            });
+        });
+
+		});
+	</script>
+</body>
+
+</html>

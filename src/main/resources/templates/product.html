@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<style>
+		/* Add your CSS styles here */
+
+		.productcontainer {
+			/*  max-width: 800px;*/
+			margin: 0 auto;
+			padding: 20px;
+			/*background-color:red;*/
+		}
+
+		h1 {
+			color: #333;
+		}
+
+		p {
+			color: #666;
+			line-height: 1.5;
+		}
+
+		.productcontainer form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin: auto;
+			width: 900px;
+		}
+
+		.form-group {
+			display: flex;
+			align-items: center;
+			margin-bottom: 10px;
+		}
+
+		.form-group label {
+			flex: 0 0 150px;
+			/* Adjust the width as needed */
+			margin-right: 10px;
+		}
+
+		.form-group input {
+			width: 500px;
+		}
+
+		.form-group.button-group {
+			display: flex;
+			justify-content: center;
+
+		}
+
+		.form-group button {
+			width: 100px;
+			margin: 5px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="productcontainer">
+		<h4>Insert Product Details by CSV</h4>
+		<form id="uploadProductCSVForm" enctype="multipart/form-data">
+			<input type="file" id="productcsvFile" accept=".csv" required><br>
+			<button type="submit" class="btn btn-success">Upload CSV</button>
+		</form>
+
+		<form id="form_manual_product" name="form_manual_product">
+			<div class="row">
+				<div class="">
+					<h4>Manual Insert</h4>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-8 col-form-label">ProductId</label>
+						<input type="text" class="form-control" name="productId" id="inputEmail3"
+							placeholder="productId">
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-8 col-form-label">Purchase Date</label>
+						<input type="text" class="form-control" name="date" id="inputEmail3" placeholder="date">
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-8 col-form-label">Purchase Price</label>
+						<input type="number" class="form-control" name="price" id="inputEmail3" placeholder="price">
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-8 col-form-label">Allocation</label>
+						<input type="text" class="form-control" name="allocate" id="inputEmail3" placeholder="allocate">
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-8 col-form-label">Purpose</label>
+						<select name="purpose" class="form-control" id="inputEmail3">
+							<option>for student</option>
+							<option>for teacher</option>
+							<option>for office</option>
+
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-8 col-form-label">Category</label>
+						<input type="text" class="form-control" name="category" id="inputEmail3" placeholder="category">
+					</div>
+					<div class="form-group">
+						<!--    <label for="inputEmail3" class="col-sm-8 col-form-label">Type</label>
+                <input type="text" class="form-control" name="type" id="inputEmail3" placeholder="type"> -->
+
+						<label for="type" class="col-sm-8 col-form-label">Type:</label>
+						<select id="type" name="typeId" class="form-control" required>
+							<option value="">Select Type</option>
+						</select><br />
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-8 col-form-label">Functionality</label>
+						<input type="text" class="form-control" name="functionality" id="inputEmail3"
+							placeholder="functionality">
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-8 col-form-label">Ruin_date</label>
+						<input type="text" class="form-control" name="ruin_date" id="inputEmail3"
+							placeholder="ruin_date">
+					</div>
+
+
+
+					<div class="form-group button-group">
+						<button type="button" id="insertproduct" class="btn btn-success">Save</button>
+						<button type="button" class="btn btn-primary">Reset</button>
+					</div>
+				</div>
+			</div>
+		</form>
+
+
+
+
+
+	</div>
+	<script src="/js/productAjaxFile.js"></script>
+</body>
+
+</html>

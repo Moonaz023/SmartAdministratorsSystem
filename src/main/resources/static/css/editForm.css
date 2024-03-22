@@ -1,0 +1,43 @@
+@charset "UTF-8";
+    /* Style for the form container */
+    #editFormContainer {
+        width: 50%;
+        margin: 20px auto;
+    }
+
+    /* Style for form elements */
+    .edit-form label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .edit-form input,
+	.edit-form select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+	
+    /* Style for buttons */
+    .edit-form button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .edit-form button:hover {
+        background-color: #45a049;
+    }
+
+    /* Style for Cancel button */
+    #cancel {
+        background-color: #808080;
+    }
+
+    #cancel:hover {
+        background-color: #737373;
+    }

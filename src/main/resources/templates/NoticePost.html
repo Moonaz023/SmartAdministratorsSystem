@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Insert Notice</title>
+	<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+</head>
+
+<body>
+
+	<h2>Insert Notice</h2>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4">
+				<form id="insertNoticeForm" enctype="multipart/form-data">
+					<label>Notice File :</label><br>
+
+					<input type="file" id="noticDoc" name="noticDoc"
+						accept=".pdf,.csv,application/vnd.ms-excel,image/jpeg,image/png"><br>
+
+					<label for="date">Date:</label><br>
+					<input type="text" id="date" name="date" required><br>
+
+					<label for="session">Session:</label><br>
+					<input type="text" id="session" name="session"><br>
+
+					<label for="year">Year:</label><br>
+					<input type="text" id="year" name="year"><br>
+
+					<label for="semester">Semester:</label><br>
+					<input type="text" id="semester" name="semester"><br>
+
+					<label for="about">About:</label><br>
+					<input type="text" id="about" name="about" required><br>
+
+					<label for="notice">Notice:</label><br>
+					<textarea id="notice" name="notice" required></textarea><br>
+
+					<input type="submit" value="Submit">
+				</form>
+			</div>
+			<div class="col-sm-8">
+				<img id="noticebord" class="d-block w-100" src="/icon_long/noticebord.jpg" alt="noticebord">
+
+			</div>
+		</div>
+	</div>
+	<script src="/js/noticePost.js"></script>
+
+
+</body>
+
+</html>

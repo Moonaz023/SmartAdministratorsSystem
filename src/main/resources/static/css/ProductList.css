@@ -1,0 +1,60 @@
+/* Table styling */
+#productList {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#productList th, #productList td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#productList th {
+    background-color: #f2f2f2;
+}
+
+/* Pagination styling */
+#pagination {
+    margin-top: 10px;
+    text-align: center;
+}
+
+#pagination button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#pagination button:hover {
+    background-color: #45a049;
+}
+
+.pageNumber {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    color: #4CAF50;
+    padding: 6px 12px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.pageNumber.active {
+    background-color: #4CAF50;
+    color: white;
+}
+/* Add this CSS to style the QR code container */
+.qr-code-container {
+    display: flex; /* Use flexbox to make the children align horizontally */
+    /*align-items: center;  Align items vertically in the center */
+}
+
+

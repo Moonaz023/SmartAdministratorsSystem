@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Notice Board</title>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" th:href="@{/css/noticeBoard.css}" />
+</head>
+
+<body>
+
+	<div class="header">
+		<a href="#default" class="logo">Smart Administrators System</a>
+		<div class="header-right">
+			<a href="/user/profile">Home</a>
+			<a class="active" href="/user/notice">Notice</a>
+			<a href="/userLogout">Logout</a>
+		</div>
+	</div>
+	<h1 class="noticeBoardTitle">Notice Board</h1>
+	<div class="noticeBoardContainer">
+		<div class="noticeBoardTable">
+			<table id="noticeBoard" class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">Notice</th>
+						<th scope="col">Attachment</th>
+					</tr>
+				</thead>
+				<tbody id="noticeBoard_tableresult"></tbody>
+			</table>
+		</div>
+	</div>
+	<br>
+	<footer id="footer">
+		<p>&copy; 2023 Department of CSE. All rights reserved.</p>
+	</footer>
+
+	<script src="/js/noticeBoard.js"></script>
+</body>
+
+</html>

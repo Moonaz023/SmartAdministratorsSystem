@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Product List</title>
+
+	<link rel="stylesheet" th:href="@{/css/ProductList.css}" />
+</head>
+
+<body>
+
+	<button type="button" class="btn-success" id="downloadProductList">Download PDF</button>
+	<br>
+	<br><br>
+	<div>
+		<input type="text" id="searchInput" placeholder="Search...">
+	</div>
+
+	<table id="productList">
+		<thead>
+			<tr>
+				<th>Product Details</th>
+				<th>QR Code</th>
+			</tr>
+		</thead>
+		<tbody id="productListBody">
+		</tbody>
+	</table>
+
+	<div id="pagination">
+		<button id="prevPage">Previous</button>
+		<span id="pageNumbers"></span>
+		<button id="nextPage">Next</button>
+	</div>
+	<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+
+	<script src="/js/ProductList.js"></script>
+</body>
+
+</html>

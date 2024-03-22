@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<div th:include="~{link.html}"></div>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+
+</head>
+
+<body>
+
+	<div id="editFormContainer" style="display: none;"></div>
+
+	<div class="container">
+
+		<form id="formEmployee" name="formEmployee" class="student-form" th:action="@{/admin/insert}" method="post">
+			<div class="row">
+				<div class="col-sm-4">
+					<h4>Insert Student</h4>
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Roll</label>
+					<input type="text" class="form-control" name="roll" id="inputEmail3" placeholder="Roll">
+
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
+					<input type="text" class="form-control" name="name" id="inputEmail3" placeholder="Name">
+
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Father's Name</label>
+					<input type="text" class="form-control" name="father" id="inputEmail3" placeholder="Father's Name">
+
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Mother's Name</label>
+					<input type="text" class="form-control" name="mother" id="inputEmail3" placeholder="Mother's Name">
+
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Session</label>
+					<input type="text" class="form-control" name="sesson" id="inputEmail3" placeholder="Session">
+
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Passing year</label>
+					<input type="text" class="form-control" name="year" id="inputEmail3" placeholder="Passing year">
+
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Exam held in</label>
+					<input type="text" class="form-control" name="exam" id="inputEmail3" placeholder="Exam held in">
+
+					<label for="inputEmail3" class="col-sm-2 col-form-label">CGPA</label>
+					<input type="text" class="form-control" name="cgpa" id="inputEmail3" placeholder="CGPA">
+
+					<div class="form-group">
+						<button type="button" id="insert" class="btn btn-success">Save</button>
+						<button type="button" class="btn btn-primary">Reset</button>
+					</div>
+				</div>
+
+				<div class="col-sm-8">
+					<h3>Student Record</h3>
+					<br>
+					<table id="example" class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">Roll</th>
+								<th scope="col">Name</th>
+								<th scope="col">Session</th>
+								<th scope="col">Passing year</th>
+								<th scope="col">CGPA</th>
+								<th scope="col">Edit</th>
+								<th scope="col">Delete</th>
+							</tr>
+						</thead>
+						<tbody id="tableresult">
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</form>
+		<h3 id="totalAmount"></h3>
+		<button type="button" id="downloadCSV" class="btn btn2 btn-primary" onclick="downloadCSV()">Download
+			CSV</button>
+		<button type="button" id="downloadPDF" class="btn btn2 btn-primary" onclick="downloadPDF()">Download
+			PDF</button>
+		<button type="button" id="downloadExcel" class="btn btn2 btn-primary" onclick="downloadExcel()">Download
+			Excel</button>
+		<button type="button" id="downloadDocBtn" class="btn btn2 btn-primary" onclick="downloadDoc()">Download
+			Document</button>
+		<h1>Insert Student Details</h1>
+
+
+		<form id="uploadForm" th:action="@{/admin/insert-data}" method="post" enctype="multipart/form-data">
+			<input type="file" name="file" id="fileInput" accept=".csv">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<button type="button" class="btn btn-success" onclick="uploadFile()">Upload</button>
+		</form>
+
+
+
+
+
+	</div>
+
+	<script src="/js/ajaxFile.js"></script>
+</body>
+
+</html>

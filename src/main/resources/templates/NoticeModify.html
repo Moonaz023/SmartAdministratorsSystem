@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+
+
+</head>
+
+<body>
+	<style>
+		#editNoticeForm {
+			width: 400px;
+			margin: 0 auto;
+			padding: 20px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			background-color: #f9f9f9;
+		}
+
+		#editNoticeForm label {
+			font-weight: bold;
+		}
+
+		#editNoticeForm input[type="text"],
+		#editNoticeForm textarea {
+			width: 100%;
+			padding: 8px;
+			margin-bottom: 10px;
+			box-sizing: border-box;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		#editNoticeForm input[type="file"] {
+			margin-top: 10px;
+		}
+
+		#editNoticeForm button {
+			padding: 10px 20px;
+
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+		#editNoticeForm button:hover {
+			background-color: #45a049;
+		}
+
+		.EditNoticeHeader {
+			text-align: center;
+		}
+	</style>
+	<div id="editNoticeContainer" style="display: none;"></div>
+
+	<div class="NoticeContainer">
+
+
+		<div>
+			<h3>Notice</h3>
+			<br>
+			<table id="NoticeModify" class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">Date</th>
+						<th scope="col">Session</th>
+						<th scope="col">Year</th>
+						<th scope="col">Semester</th>
+						<th scope="col">About</th>
+						<th scope="col">Notice</th>
+						<th scope="col">FileName</th>
+						<th scope="col">Edit</th>
+						<th scope="col">Delete</th>
+					</tr>
+				</thead>
+				<tbody id="NoticeModifyTableresult">
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+	</div>
+
+	<script src="/js/NoticeModify.js"></script>
+</body>
+
+</html>

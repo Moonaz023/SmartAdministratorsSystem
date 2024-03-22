@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<style>
+		#generateTestimonial {
+			width: 300px;
+			margin: 0 auto;
+			background-color: #f2f2f2;
+			padding: 20px;
+			border-radius: 5px;
+		}
+
+		#generateTestimonial label {
+			font-weight: bold;
+			margin-bottom: 5px;
+		}
+
+		#generateTestimonial input[type="text"],
+		#generateTestimonial input[type="number"] {
+			width: calc(100% - 40px);
+			padding: 10px;
+			margin-bottom: 15px;
+			box-sizing: border-box;
+			border: 1px solid #ccc;
+			border-radius: 3px;
+		}
+
+		#generateTestimonial input[type="submit"] {
+			width: 100%;
+			padding: 10px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 3px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+
+		#generateTestimonial input[type="submit"]:hover {
+			background-color: #45a049;
+		}
+	</style>
+	<form id="generateTestimonial" onsubmit="generateTestimonial(event)">
+		<label for="roll">Roll:</label><br>
+		<input type="text" id="roll" name="roll" required><br>
+		<label for="passingYear">Passing Year:</label><br>
+		<input type="text" id="passingYear" name="passingYear" required><br>
+		<label for="ExamHeldIn">Exam Held In:</label><br>
+		<input type="text" id="ExamHeldIn" name="ExamHeldIn" required><br>
+		<label for="CGPA">CGPA:</label><br>
+		<input type="number" id="CGPA" name="CGPA" step="0.01" required><br>
+
+		<input type="submit" value="Submit">
+	</form>
+</body>
+<script>
+	function generateTestimonial(event) {
+		event.preventDefault(); // Prevent form submission
+
+		var roll = document.getElementById("roll").value;
+		var passingYear = document.getElementById("passingYear").value;
+		var ExamHeldIn = document.getElementById("ExamHeldIn").value;
+		var CGPA = document.getElementById("CGPA").value;
+
+		// Redirect to download endpoint with form data
+		window.location.href = "/admin/generateTestimonial?roll=" + roll + "&passingYear=" + passingYear + "&ExamHeldIn=" + ExamHeldIn + "&CGPA=" + CGPA;
+	}
+</script>
+
+
+</html>
