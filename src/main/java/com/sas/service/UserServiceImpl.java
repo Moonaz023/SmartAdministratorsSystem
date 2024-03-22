@@ -14,8 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import com.sas.entity.User;
+import com.sas.entity.Type;
 import com.sas.entity.UserDOT;
+import com.sas.repository.TypeRepository;
 import com.sas.repository.UserRepository;
+
 
 import jakarta.servlet.http.HttpSession;
 
@@ -24,6 +27,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepo;
+	@Autowired
+	private TypeRepository typeRepo;
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -33,10 +38,19 @@ public class UserServiceImpl implements UserService {
 
 		String password=passwordEncoder.encode(user.getPassword());
 		user.setPassword(password);
-		user.setRole("ROLE_USER");
+		user.setRole("ROLE_ADMIN");
 		
 		User newuser = userRepo.save(user);
-
+		
+		
+		Type t = new Type();
+		t.setName("electric");
+		typeRepo.save(t);
+		Type t2 = new Type();
+		t2.setName("furniture");
+		typeRepo.save(t2);
+		
+		
 		return newuser;
 	}
 
