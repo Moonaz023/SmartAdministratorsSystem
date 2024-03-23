@@ -43,12 +43,12 @@ public class UserServiceImpl implements UserService {
 		User newuser = userRepo.save(user);
 		
 		
-		Type t = new Type();
-		t.setName("electric");
-		typeRepo.save(t);
-		Type t2 = new Type();
-		t2.setName("furniture");
-		typeRepo.save(t2);
+//		Type t = new Type();
+//		t.setName("electric");
+//		typeRepo.save(t);
+//		Type t2 = new Type();
+//		t2.setName("furniture");
+//		typeRepo.save(t2);
 		
 		
 		return newuser;
