@@ -16,6 +16,8 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+
+
 import java.io.IOException;
 import java.security.Principal;
 @Controller
@@ -50,10 +52,10 @@ public class NoticeBoardController {
 	}
 	
 
-    @GetMapping("/user/open/{fileName}")
+    @GetMapping("/user/open/{fileName}") 
     public ResponseEntity<Resource> openFileInNewTab(@PathVariable String fileName) throws IOException {
     	return noticeService.openFileInNewTab(fileName);
        
     }
-
+   
 }

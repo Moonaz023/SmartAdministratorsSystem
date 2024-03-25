@@ -186,7 +186,7 @@ function editRecord() {
 //===========================================INSERT Image================================================
 
 $('#imgUploadForm').submit(function(event) {
-    console.log('Image upload failed');
+   
     event.preventDefault();
     
     var formData = new FormData();
@@ -241,7 +241,7 @@ function loadImg(imageName) {
             console.log('Error loading image:', error);
 
             // If there's an error, set a default image
-            $('#profileImg').attr('src', '/images/default.jpg');
+            $('#profileImg').attr('src', '/uploads/default.jpg');
         }
     });
 }
