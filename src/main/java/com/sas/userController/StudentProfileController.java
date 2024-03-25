@@ -41,7 +41,7 @@ public class StudentProfileController {
 
 	@Autowired
 	private UserRepository userRepo;
-	private static final String UPLOAD_DIR = "src\\main\\resources\\static\\uploads";
+	private static final String UPLOAD_DIR = "static\\uploads";
 	
 	//private static final String UPLOAD_DIR = "/uploads";
 	@ModelAttribute
