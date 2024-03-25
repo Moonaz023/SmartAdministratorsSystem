@@ -41,8 +41,9 @@ public class StudentProfileController {
 
 	@Autowired
 	private UserRepository userRepo;
-	//private static final String UPLOAD_DIR = "src\\main\\resources\\static\\uploads";
-	private static final String UPLOAD_DIR = "/uploads";
+	private static final String UPLOAD_DIR = "src\\main\\resources\\static\\uploads";
+	
+	//private static final String UPLOAD_DIR = "/uploads";
 	@ModelAttribute
 	public void commonUser(Principal p, Model m) {
 		if (p != null) {
@@ -134,7 +135,7 @@ public class StudentProfileController {
 
 	    for (String extension : supportedExtensions) {
 	        Path potentialImagePath = Paths.get(UPLOAD_DIR).resolve(imageName + "." + extension);
-
+	        System.out.println("img url hit=================>>>"+potentialImagePath);
 	        if (Files.exists(potentialImagePath)) {
 	            imagePath = potentialImagePath;
 	            break;
@@ -142,11 +143,13 @@ public class StudentProfileController {
 	    }
 
 	    if (imagePath != null) {
+	    	System.out.println("img url hit=================>>>Path not null");
 	        Resource imageResource = new UrlResource(imagePath.toUri());
 	        return ResponseEntity.ok()
 	                .header(HttpHeaders.CONTENT_TYPE, "image/*")
 	                .body(imageResource);
 	    } else {
+	    	System.out.println("img url hit=================>>>Path is null");
 	        // If the image file is not found, return a default image
 	        Path defaultImagePath = Paths.get(UPLOAD_DIR).resolve("default.jpg");
 	        Resource defaultImageResource = new UrlResource(defaultImagePath.toUri());
