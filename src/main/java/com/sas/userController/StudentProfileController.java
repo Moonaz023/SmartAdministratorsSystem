@@ -42,7 +42,7 @@ public class StudentProfileController {
 	@Autowired
 	private UserRepository userRepo;
 	//private static final String UPLOAD_DIR = "src\\main\\resources\\static\\uploads";
-	private static final String UPLOAD_DIR = "uploads";
+	private static final String UPLOAD_DIR = "/uploads";
 	@ModelAttribute
 	public void commonUser(Principal p, Model m) {
 		if (p != null) {
@@ -126,7 +126,8 @@ public class StudentProfileController {
 
 	@GetMapping("/images/{imageName}")
 	public ResponseEntity<Resource> serveImage(@PathVariable String imageName) throws IOException {
-	    // Find the image file with any extension by checking each supported extension
+		
+		System.out.println("img url hit=================>>>");	    // Find the image file with any extension by checking each supported extension
 	    List<String> supportedExtensions = Arrays.asList("png", "jpg", "jpeg", "gif"); 
 
 	    Path imagePath = null;

@@ -235,7 +235,7 @@ function loadImg(imageName) {
         type: 'GET',
         success: function(response) {
             // Set the source of the image to the retrieved image
-            $('#profileImg').attr('src', '/images/' + imageName);
+            $('#profileImg').attr('src', '/uploads/' + imageName);
         },
         error: function(xhr, status, error) {
             console.log('Error loading image:', error);
