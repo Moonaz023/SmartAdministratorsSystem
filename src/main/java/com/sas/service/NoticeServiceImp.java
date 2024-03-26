@@ -30,7 +30,7 @@ public class NoticeServiceImp implements NoticeService {
 	@Autowired
 	private NoticeRepository noticeRepository;
 //	private static final String UPLOAD_DIR = "src\\main\\resources\\static\\notics";
-	private static final String UPLOAD_DIR = "src\\main\\resources\\static\\notics";
+	private static final String UPLOAD_DIR = "notics";
 
 	@Override
 	public void insertNotice(NoticeEntity notice, MultipartFile file) {
