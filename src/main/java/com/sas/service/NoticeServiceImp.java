@@ -80,7 +80,7 @@ public class NoticeServiceImp implements NoticeService {
 
 	@Override
 	public ResponseEntity<Resource> openFileInNewTab(String fileName) throws IOException {
-		Resource resource = new ClassPathResource("static/notics/" + fileName);
+		Resource resource = new ClassPathResource("notics/" + fileName);
 
 		String fileExtension = getFileExtension(fileName);
 		MediaType contentType = CONTENT_TYPE_MAP.getOrDefault(fileExtension.toLowerCase(),
