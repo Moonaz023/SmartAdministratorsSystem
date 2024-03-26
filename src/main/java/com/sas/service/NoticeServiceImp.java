@@ -30,7 +30,7 @@ public class NoticeServiceImp implements NoticeService {
 	@Autowired
 	private NoticeRepository noticeRepository;
 //	private static final String UPLOAD_DIR = "src\\main\\resources\\static\\notics";
-	private static final String UPLOAD_DIR = "notics";
+	private static final String UPLOAD_DIR = "src\\main\\resources\\static\\notics";
 
 	@Override
 	public void insertNotice(NoticeEntity notice, MultipartFile file) {
@@ -80,7 +80,7 @@ public class NoticeServiceImp implements NoticeService {
 
 	@Override
 	public ResponseEntity<Resource> openFileInNewTab(String fileName) throws IOException {
-		Resource resource = new ClassPathResource("notics/" + fileName);
+		Resource resource = new ClassPathResource("static/notics/" + fileName);
 
 		String fileExtension = getFileExtension(fileName);
 		MediaType contentType = CONTENT_TYPE_MAP.getOrDefault(fileExtension.toLowerCase(),
