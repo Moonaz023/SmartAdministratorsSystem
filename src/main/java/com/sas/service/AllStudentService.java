@@ -28,4 +28,6 @@ public interface AllStudentService {
 
 	String ChangePasswordRequest(ChangePasswordRequest updatedPassword);
 
+	StudentEntity checkDetails(String roll);
+
 }

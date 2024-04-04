@@ -32,7 +32,7 @@
                 type: "GET",
                 url: "/admin/allfetchStudent",
                 success: function (stu_response) {
-					 //console.log(response); // Add this line
+					 //console.log(response); 
                     stu_data = stu_response;
                     $('#allStudent').DataTable().destroy();
                     $('#allStudent_tableresult').empty();

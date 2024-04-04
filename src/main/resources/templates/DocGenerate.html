@@ -68,9 +68,33 @@
 		var ExamHeldIn = document.getElementById("ExamHeldIn").value;
 		var CGPA = document.getElementById("CGPA").value;
 
-		// Redirect to download endpoint with form data
-		window.location.href = "/admin/generateTestimonial?roll=" + roll + "&passingYear=" + passingYear + "&ExamHeldIn=" + ExamHeldIn + "&CGPA=" + CGPA;
-		$("#generateTestimonial")[0].reset();
+		     $.ajax({
+                type: "GET",
+                url: "/admin/checkDetails",
+			    data: {
+			        roll: roll 
+			    },
+                success: function (s_response) {
+					 console.log(s_response); 
+					 if (s_response.roll === undefined || s_response === null || s_response.roll === null) {
+        			    alert("Wrong roll number. Student not found.");
+       				 } else {
+						 if (s_response.details.fatherName === null || s_response.details.motherName === null) {
+							  alert("Can not find student personal details,ask the student to complete personal details using student profile");
+						 } else {
+							 window.location.href = "/admin/generateTestimonial?roll=" + roll + "&passingYear=" + passingYear + "&ExamHeldIn=" + ExamHeldIn + "&CGPA=" + CGPA;
+							 $("#generateTestimonial")[0].reset();
+						   }
+        			   
+       				 }
+
+                },
+                error: function (err) {
+                    alert("Error: " + err);
+                    console.error("Error:", err);
+                }
+            });
+		
 	}
 </script>
 

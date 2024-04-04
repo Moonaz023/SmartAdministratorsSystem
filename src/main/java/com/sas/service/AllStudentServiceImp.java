@@ -116,6 +116,10 @@ public class AllStudentServiceImp implements AllStudentService {
 	        return "failed";
 	    }
 	}
+	@Override
+	public StudentEntity checkDetails(String roll) {
+		return allStudentRepository.findByRoll(roll);
+	}
 
 	
 		
