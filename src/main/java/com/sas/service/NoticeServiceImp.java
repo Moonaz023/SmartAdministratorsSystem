@@ -30,6 +30,10 @@ public class NoticeServiceImp implements NoticeService {
 	@Autowired
 	private NoticeRepository noticeRepository;
 	private static final String UPLOAD_DIR = "src\\main\\resources\\static\\notics";
+	public final String UPLOAD_DIR2 = new ClassPathResource("/static/notics").getFile().getAbsolutePath();
+	public NoticeServiceImp()throws IOException {
+		
+	}
 //	private static final String UPLOAD_DIR = "notics";
 
 	@Override
@@ -38,7 +42,7 @@ public class NoticeServiceImp implements NoticeService {
 		try {
 			String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
 			notice.setFileName(originalFileName);
-			Path uploadPath = Paths.get(UPLOAD_DIR);
+			Path uploadPath = Paths.get(UPLOAD_DIR2);
 
 			// If the directory doesn't exist, create it
 			if (!Files.exists(uploadPath)) {
@@ -112,7 +116,7 @@ public class NoticeServiceImp implements NoticeService {
 	    try {
 	        if (file != null && !file.isEmpty()) {
 	            String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
-	            Path uploadPath = Paths.get(UPLOAD_DIR);
+	            Path uploadPath = Paths.get(UPLOAD_DIR2);
 
 	            // If the directory doesn't exist, create it
 	            if (!Files.exists(uploadPath)) {

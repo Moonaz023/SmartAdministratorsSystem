@@ -202,6 +202,7 @@ $('#imgUploadForm').submit(function(event) {
       processData: false,
       contentType: false,
       success: function(response) {
+		   console.log(response);
         console.log('Image uploaded successfully');
          $("#imgUploadForm")[0].reset();
          $("#imgUploadForm").hide();
@@ -236,12 +237,14 @@ function loadImg(imageName) {
         success: function(response) {
             // Set the source of the image to the retrieved image
             $('#profileImg').attr('src', '/images/' + imageName);
+            //$('#profileImg').attr('src', response);
         },
         error: function(xhr, status, error) {
             console.log('Error loading image:', error);
 
             // If there's an error, set a default image
             $('#profileImg').attr('src', '/uploads/default.jpg');
+           // $('#profileImg').attr('src', response);
         }
     });
 }

@@ -3,12 +3,16 @@ package com.sas.userController;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,14 +29,20 @@ import java.nio.file.Paths;
 import com.sas.entity.StudentDetailsEntity;
 import com.sas.entity.StudentEntity;
 import com.sas.entity.User;
+import com.cloudinary.Cloudinary;
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.sas.entity.ChangePasswordRequest;
 import com.sas.repository.UserRepository;
 import com.sas.service.AllStudentService;
+import com.sas.service.CloudinaryFileService;
 
 import jakarta.servlet.http.HttpSession;
+
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatusCode;
 @Controller
 public class StudentProfileController {
 
@@ -43,6 +53,10 @@ public class StudentProfileController {
 	private UserRepository userRepo;
 //	private static final String UPLOAD_DIR = "src\\main\\resources\\static\\uploads";
 	private static final String UPLOAD_DIR = "uploads";
+	public final String UPLOAD_DIR2 = new ClassPathResource("/static/uploads").getFile().getAbsolutePath();
+	public StudentProfileController()throws IOException {
+		
+	}
 	@ModelAttribute
 	public void commonUser(Principal p, Model m) {
 		if (p != null) {
@@ -103,7 +117,7 @@ public class StudentProfileController {
             String finalFileName = fileName + ".jpg";
 
             
-            Path uploadPath = Paths.get(UPLOAD_DIR);
+            Path uploadPath = Paths.get(UPLOAD_DIR2);
 
             // If the directory doesn't exist, create it
             if (!Files.exists(uploadPath)) {
@@ -125,15 +139,36 @@ public class StudentProfileController {
     }
 
 	@GetMapping("/images/{imageName}")
+//	public ResponseEntity<String> checkLinkValidity(@PathVariable String imageName) throws IOException {
+//		String link="https://res.cloudinary.com/dy6twgshm/image/upload/"+imageName;
+//        try {
+//            URL url = new URL(link);
+//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//            connection.setRequestMethod("HEAD");
+//            int responseCode = connection.getResponseCode();
+//            
+//            if (responseCode == HttpURLConnection.HTTP_OK) {
+//                // Link is valid
+//                return ResponseEntity.ok("https://res.cloudinary.com/dy6twgshm/image/upload/v1712750310/"+imageName);
+//            } else {
+//                // Link is not valid
+//                return ResponseEntity.ok("https://res.cloudinary.com/dy6twgshm/image/upload/v1712750310/default");
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            // Error occurred, return default image path
+//            return ResponseEntity.ok("https://res.cloudinary.com/dy6twgshm/image/upload/v1712750310/default");
+//        }
+//    }
 	public ResponseEntity<Resource> serveImage(@PathVariable String imageName) throws IOException {
 		
-		System.out.println("img url hit=================>>>");	    // Find the image file with any extension by checking each supported extension
+		System.out.println("img url hit=================>>>");
 	    List<String> supportedExtensions = Arrays.asList("png", "jpg", "jpeg", "gif"); 
 
 	    Path imagePath = null;
 
 	    for (String extension : supportedExtensions) {
-	        Path potentialImagePath = Paths.get(UPLOAD_DIR).resolve(imageName + "." + extension);
+	        Path potentialImagePath = Paths.get(UPLOAD_DIR2).resolve(imageName + "." + extension);
 	        System.out.println("img url hit=================>>>"+potentialImagePath);
 	        if (Files.exists(potentialImagePath)) {
 	            imagePath = potentialImagePath;
@@ -150,14 +185,25 @@ public class StudentProfileController {
 	    } else {
 	    	System.out.println("img url hit=================>>>Path is null");
 	        // If the image file is not found, return a default image
-	        Path defaultImagePath = Paths.get(UPLOAD_DIR).resolve("default.jpg");
+	        Path defaultImagePath = Paths.get(UPLOAD_DIR2).resolve("default.jpg");
 	        Resource defaultImageResource = new UrlResource(defaultImagePath.toUri());
+	        System.out.println("img url hit=================>>>"+defaultImageResource);
 
 	        return ResponseEntity.ok()
 	                .header(HttpHeaders.CONTENT_TYPE, "image/*")
 	                .body(defaultImageResource);
 	    }
 	}
-
-
+	
+//	@Autowired
+//    private CloudinaryFileService cloudinary;
+//
+//    @PostMapping("/imgup")
+//    public ResponseEntity<Map> imguploadcloud(@RequestParam("profileImage") MultipartFile file, @RequestParam("fileName") String fileName) {
+//        System.out.println("got it controller");
+//        Map data = this.cloudinary.Upload(file,fileName);
+//        String secureUrl = (String)data.get("secure_url");
+//        System.out.println("Secure URL: " + secureUrl);
+//        return ResponseEntity.ok(data);
+//    }
 }
