@@ -53,10 +53,9 @@ public class StudentProfileController {
     @Autowired
     private UserRepository userRepo;
 
-    public final String UPLOAD_DIR2;
+    public final String UPLOAD_DIR2 = new ClassPathResource("static/uploads").getPath();
 
     public StudentProfileController() throws IOException {
-        UPLOAD_DIR2 = new ClassPathResource("static/uploads").getFile().getAbsolutePath();
     }
 
     @ModelAttribute
@@ -94,16 +93,13 @@ public class StudentProfileController {
 
     @PostMapping("/user/changePassword")
     @ResponseBody
-    public String ChangePasswordRequest(ChangePasswordRequest updatedPassword) {
-        // System.out.println("Controller : User not found with ID: " +
-        // updatedPassword.getNewPassword());
+    public String ChangePasswordRequest(@ModelAttribute ChangePasswordRequest updatedPassword) {
         return allStudentService.ChangePasswordRequest(updatedPassword);
     }
 
     @PostMapping("/uploadImage")
     @ResponseBody
-    public ResponseEntity<String> handleFileUpload(@RequestParam("profileImage") MultipartFile file,
-            @RequestParam("fileName") String fileName) {
+    public ResponseEntity<String> handleFileUpload(@RequestParam("profileImage") MultipartFile file, @RequestParam("fileName") String fileName) {
         try {
             if (file.isEmpty()) {
                 return ResponseEntity.badRequest().body("Please select a file to upload.");
@@ -113,10 +109,12 @@ public class StudentProfileController {
 
             Path uploadPath = Paths.get(UPLOAD_DIR2);
 
+            // If the directory doesn't exist, create it
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
 
+            // Save the file to the server
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, uploadPath.resolve(finalFileName), StandardCopyOption.REPLACE_EXISTING);
             }
@@ -132,13 +130,12 @@ public class StudentProfileController {
 
     @GetMapping("/images/{imageName}")
     public ResponseEntity<Resource> serveImage(@PathVariable String imageName) throws IOException {
-        System.out.println("Image URL hit =======================>>>");
         List<String> supportedExtensions = Arrays.asList("png", "jpg", "jpeg", "gif");
+
         Path imagePath = null;
 
         for (String extension : supportedExtensions) {
             Path potentialImagePath = Paths.get(UPLOAD_DIR2).resolve(imageName + "." + extension);
-            System.out.println("Image URL hit =======================>>> " + potentialImagePath);
             if (Files.exists(potentialImagePath)) {
                 imagePath = potentialImagePath;
                 break;
@@ -146,16 +143,18 @@ public class StudentProfileController {
         }
 
         if (imagePath != null) {
-            System.out.println("Image URL hit =======================>>> Path not null");
             Resource imageResource = new UrlResource(imagePath.toUri());
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/*").body(imageResource);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_TYPE, "image/*")
+                    .body(imageResource);
         } else {
-            System.out.println("Image URL hit =======================>>> Path is null");
+            // If the image file is not found, return a default image
             Path defaultImagePath = Paths.get(UPLOAD_DIR2).resolve("default.jpg");
             Resource defaultImageResource = new UrlResource(defaultImagePath.toUri());
-            System.out.println("Image URL hit =======================>>> " + defaultImageResource);
 
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/*").body(defaultImageResource);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_TYPE, "image/*")
+                    .body(defaultImageResource);
         }
     }
  // @GetMapping("/images/{imageName}")
