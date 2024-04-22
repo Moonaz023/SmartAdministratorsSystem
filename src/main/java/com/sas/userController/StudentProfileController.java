@@ -158,7 +158,32 @@ public class StudentProfileController {
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/*").body(defaultImageResource);
         }
     }
-
+ // @GetMapping("/images/{imageName}")
+    // public ResponseEntity<String> checkLinkValidity(@PathVariable String imageName)
+    // throws IOException {
+    // String
+    // link="https://res.cloudinary.com/dy6twgshm/image/upload/"+imageName;
+    // try {
+    // URL url = new URL(link);
+    // HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    // connection.setRequestMethod("HEAD");
+    // int responseCode = connection.getResponseCode();
+    //
+    // if (responseCode == HttpURLConnection.HTTP_OK) {
+    // // Link is valid
+    // return ResponseEntity.ok("https://res.cloudinary.com/dy6twgshm/image/upload/v1712750310/"+imageName);
+    // } else {
+    // // Link is not valid
+    // return
+    // ResponseEntity.ok("https://res.cloudinary.com/dy6twgshm/image/upload/v1712750310/default");
+    // }
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // // Error occurred, return default image path
+    // return
+    // ResponseEntity.ok("https://res.cloudinary.com/dy6twgshm/image/upload/v1712750310/default");
+    // }
+    // }
 
 
 
