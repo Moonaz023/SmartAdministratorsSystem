@@ -53,7 +53,7 @@ public class StudentProfileController {
 	private UserRepository userRepo;
 //	private static final String UPLOAD_DIR = "src\\main\\resources\\static\\uploads";
 	private static final String UPLOAD_DIR = "uploads";
-	public final String UPLOAD_DIR2 = new ClassPathResource("/static/uploads").getFile().getAbsolutePath();
+	public final String UPLOAD_DIR2 = new ClassPathResource("static/uploads").getFile().getAbsolutePath();
 	public StudentProfileController()throws IOException {
 		
 	}
