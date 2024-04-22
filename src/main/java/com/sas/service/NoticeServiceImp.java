@@ -31,9 +31,18 @@ public class NoticeServiceImp implements NoticeService {
     @Autowired
     private NoticeRepository noticeRepository;
 
-    public final String UPLOAD_DIR2 = new ClassPathResource("static/notics/").getFile().getAbsolutePath();
+    private final String UPLOAD_DIR2;
 
-    public NoticeServiceImp() throws IOException {
+    public NoticeServiceImp() {
+        String uploadDirPath;
+        try {
+            uploadDirPath = new ClassPathResource("static/notics/").getFile().getAbsolutePath();
+        } catch (IOException e) {
+            // Handle the IOException gracefully
+            uploadDirPath = System.getProperty("java.io.tmpdir"); // Use a default directory
+            e.printStackTrace();
+        }
+        UPLOAD_DIR2 = uploadDirPath;
     }
 
     @Override
