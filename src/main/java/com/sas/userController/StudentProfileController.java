@@ -1,5 +1,6 @@
 package com.sas.userController;
-
+//	private static final String UPLOAD_DIR = "src\\main\\resources\\static\\uploads";
+//	private static final String UPLOAD_DIR = "uploads";
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,85 +47,76 @@ import org.springframework.http.HttpStatusCode;
 @Controller
 public class StudentProfileController {
 
-	@Autowired
+    @Autowired
     private AllStudentService allStudentService;
 
-	@Autowired
-	private UserRepository userRepo;
-//	private static final String UPLOAD_DIR = "src\\main\\resources\\static\\uploads";
-	private static final String UPLOAD_DIR = "uploads";
-	public final String UPLOAD_DIR2 = new ClassPathResource("static/uploads").getFile().getAbsolutePath();
-	public StudentProfileController()throws IOException {
-		
-	}
-	@ModelAttribute
-	public void commonUser(Principal p, Model m) {
-		if (p != null) {
-			String email = p.getName();
-			User user = userRepo.findByEmail(email);
-			m.addAttribute("user", user);
-		}
+    @Autowired
+    private UserRepository userRepo;
 
-	}
-//	@GetMapping("/studentProfile")
-//	public String index() {
-//		return "student-profile";
-//	}
-	@GetMapping("/user/profile")
-	public String studentProfile() {
-		return "student-profile";
-	}
-	@GetMapping("/user/changePassword")
-	public String changePassword() {
-		return "changePassword";
-	}
-	
-	@GetMapping("/fetchStudentbyUserName/{userName}")
-	@ResponseBody
-    public StudentEntity fetchStudentByUserName(@PathVariable String userName) {
-        
-		StudentEntity student = allStudentService.fetchStudentByUserName(userName);
-		return student;
+    public final String UPLOAD_DIR2;
+
+    public StudentProfileController() throws IOException {
+        UPLOAD_DIR2 = new ClassPathResource("static/uploads").getFile().getAbsolutePath();
     }
-	@PostMapping("/editStudentProfile")
-    @ResponseBody
-    public String updateStudent( @ModelAttribute StudentDetailsEntity updatedStudentDetails,HttpSession session ) {
-        
-		allStudentService.updateStudentDetails(updatedStudentDetails);
 
+    @ModelAttribute
+    public void commonUser(Principal p, Model m) {
+        if (p != null) {
+            String email = p.getName();
+            User user = userRepo.findByEmail(email);
+            m.addAttribute("user", user);
+        }
+    }
+
+    @GetMapping("/user/profile")
+    public String studentProfile() {
+        return "student-profile";
+    }
+
+    @GetMapping("/user/changePassword")
+    public String changePassword() {
+        return "changePassword";
+    }
+
+    @GetMapping("/fetchStudentbyUserName/{userName}")
+    @ResponseBody
+    public StudentEntity fetchStudentByUserName(@PathVariable String userName) {
+        StudentEntity student = allStudentService.fetchStudentByUserName(userName);
+        return student;
+    }
+
+    @PostMapping("/editStudentProfile")
+    @ResponseBody
+    public String updateStudent(@ModelAttribute StudentDetailsEntity updatedStudentDetails, HttpSession session) {
+        allStudentService.updateStudentDetails(updatedStudentDetails);
         return "Student record updated successfully";
     }
-	@PostMapping("/user/changePassword")
+
+    @PostMapping("/user/changePassword")
     @ResponseBody
     public String ChangePasswordRequest(ChangePasswordRequest updatedPassword) {
-		//System.out.println("Controller :User not found with ID: " + updatedPassword.getNewPassword());
-		return allStudentService.ChangePasswordRequest(updatedPassword);
-
-      
+        // System.out.println("Controller : User not found with ID: " +
+        // updatedPassword.getNewPassword());
+        return allStudentService.ChangePasswordRequest(updatedPassword);
     }
-	@PostMapping("/uploadImage")
-	 @ResponseBody
-    public ResponseEntity<String> handleFileUpload(@RequestParam("profileImage") MultipartFile file, @RequestParam("fileName") String fileName) {
+
+    @PostMapping("/uploadImage")
+    @ResponseBody
+    public ResponseEntity<String> handleFileUpload(@RequestParam("profileImage") MultipartFile file,
+            @RequestParam("fileName") String fileName) {
         try {
-           
             if (file.isEmpty()) {
                 return ResponseEntity.badRequest().body("Please select a file to upload.");
             }
 
-            
-            //String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
-            //String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
             String finalFileName = fileName + ".jpg";
 
-            
             Path uploadPath = Paths.get(UPLOAD_DIR2);
 
-            // If the directory doesn't exist, create it
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
 
-            // Save the file to the server
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, uploadPath.resolve(finalFileName), StandardCopyOption.REPLACE_EXISTING);
             }
@@ -138,62 +130,38 @@ public class StudentProfileController {
         }
     }
 
-	@GetMapping("/images/{imageName}")
-//	public ResponseEntity<String> checkLinkValidity(@PathVariable String imageName) throws IOException {
-//		String link="https://res.cloudinary.com/dy6twgshm/image/upload/"+imageName;
-//        try {
-//            URL url = new URL(link);
-//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//            connection.setRequestMethod("HEAD");
-//            int responseCode = connection.getResponseCode();
-//            
-//            if (responseCode == HttpURLConnection.HTTP_OK) {
-//                // Link is valid
-//                return ResponseEntity.ok("https://res.cloudinary.com/dy6twgshm/image/upload/v1712750310/"+imageName);
-//            } else {
-//                // Link is not valid
-//                return ResponseEntity.ok("https://res.cloudinary.com/dy6twgshm/image/upload/v1712750310/default");
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            // Error occurred, return default image path
-//            return ResponseEntity.ok("https://res.cloudinary.com/dy6twgshm/image/upload/v1712750310/default");
-//        }
-//    }
-	public ResponseEntity<Resource> serveImage(@PathVariable String imageName) throws IOException {
-		
-		System.out.println("img url hit=================>>>");
-	    List<String> supportedExtensions = Arrays.asList("png", "jpg", "jpeg", "gif"); 
+    @GetMapping("/images/{imageName}")
+    public ResponseEntity<Resource> serveImage(@PathVariable String imageName) throws IOException {
+        System.out.println("Image URL hit =======================>>>");
+        List<String> supportedExtensions = Arrays.asList("png", "jpg", "jpeg", "gif");
+        Path imagePath = null;
 
-	    Path imagePath = null;
+        for (String extension : supportedExtensions) {
+            Path potentialImagePath = Paths.get(UPLOAD_DIR2).resolve(imageName + "." + extension);
+            System.out.println("Image URL hit =======================>>> " + potentialImagePath);
+            if (Files.exists(potentialImagePath)) {
+                imagePath = potentialImagePath;
+                break;
+            }
+        }
 
-	    for (String extension : supportedExtensions) {
-	        Path potentialImagePath = Paths.get(UPLOAD_DIR2).resolve(imageName + "." + extension);
-	        System.out.println("img url hit=================>>>"+potentialImagePath);
-	        if (Files.exists(potentialImagePath)) {
-	            imagePath = potentialImagePath;
-	            break;
-	        }
-	    }
+        if (imagePath != null) {
+            System.out.println("Image URL hit =======================>>> Path not null");
+            Resource imageResource = new UrlResource(imagePath.toUri());
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/*").body(imageResource);
+        } else {
+            System.out.println("Image URL hit =======================>>> Path is null");
+            Path defaultImagePath = Paths.get(UPLOAD_DIR2).resolve("default.jpg");
+            Resource defaultImageResource = new UrlResource(defaultImagePath.toUri());
+            System.out.println("Image URL hit =======================>>> " + defaultImageResource);
 
-	    if (imagePath != null) {
-	    	System.out.println("img url hit=================>>>Path not null");
-	        Resource imageResource = new UrlResource(imagePath.toUri());
-	        return ResponseEntity.ok()
-	                .header(HttpHeaders.CONTENT_TYPE, "image/*")
-	                .body(imageResource);
-	    } else {
-	    	System.out.println("img url hit=================>>>Path is null");
-	        // If the image file is not found, return a default image
-	        Path defaultImagePath = Paths.get(UPLOAD_DIR2).resolve("default.jpg");
-	        Resource defaultImageResource = new UrlResource(defaultImagePath.toUri());
-	        System.out.println("img url hit=================>>>"+defaultImageResource);
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/*").body(defaultImageResource);
+        }
+    }
 
-	        return ResponseEntity.ok()
-	                .header(HttpHeaders.CONTENT_TYPE, "image/*")
-	                .body(defaultImageResource);
-	    }
-	}
+
+
+
 	
 //	@Autowired
 //    private CloudinaryFileService cloudinary;
