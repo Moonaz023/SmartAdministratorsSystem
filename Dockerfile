@@ -7,13 +7,6 @@ RUN mvn clean package -DskipTests
 # Stage 2: Create the final image
 FROM openjdk:17.0.1-jdk-slim
 WORKDIR /app
-# Add volume mount for uploads directory
-VOLUME /app/uploads
-VOLUME /app/notics
-# Copy the uploads directory from host to container
-COPY --chown=1000:1000 uploads /app/uploads
-COPY --chown=1000:1000 src/main/resources/static/notics /app/notics
-# Copy the built JAR file
 COPY --from=build /app/target/SmartAdministratorsSystem-0.0.1-SNAPSHOT.jar SmartAdministratorsSystem.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "SmartAdministratorsSystem.jar"]
+ENTRYPOINT [ "java", "-jar", "SmartAdministratorsSystem.jar" ]
