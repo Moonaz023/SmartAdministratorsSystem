@@ -18,6 +18,7 @@ import com.sas.repository.NoticeRepository;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -96,7 +97,8 @@ public class NoticeServiceImp implements NoticeService {
     @Override
     public ResponseEntity<Resource> openFileInNewTab(String fileName) throws IOException {
         Resource resource = new ClassPathResource("static/notics/" + fileName);
-        String absoluteFilePath = resource.getFile().getAbsolutePath();
+        URL resourceUrl = resource.getURL();
+        System.out.println("File URL: " + resourceUrl);
 
         String fileExtension = getFileExtension(fileName);
         MediaType contentType = CONTENT_TYPE_MAP.getOrDefault(fileExtension.toLowerCase(),
@@ -105,14 +107,8 @@ public class NoticeServiceImp implements NoticeService {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, contentType.toString());
 
-        // Adding the absolute file path as a custom header
-        headers.add("X-File-Path", absoluteFilePath);
-        // Printing the absolute file path
-        System.out.println("Absolute file path: " + absoluteFilePath);
-
         return ResponseEntity.ok().headers(headers).body(resource);
     }
-
 
     private String getFileExtension(String fileName) {
         int lastDotIndex = fileName.lastIndexOf('.');
