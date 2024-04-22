@@ -37,7 +37,7 @@ public class NoticeServiceImp implements NoticeService {
     public NoticeServiceImp() {
         String uploadDirPath;
         try {
-            uploadDirPath = new ClassPathResource("static/notics/").getFile().getAbsolutePath();
+            uploadDirPath = new ClassPathResource("/static/notics/").getFile().getAbsolutePath();
         } catch (IOException e) {
             // Handle the IOException gracefully
             uploadDirPath = System.getProperty("java.io.tmpdir"); // Use a default directory
@@ -96,6 +96,7 @@ public class NoticeServiceImp implements NoticeService {
     @Override
     public ResponseEntity<Resource> openFileInNewTab(String fileName) throws IOException {
         Resource resource = new ClassPathResource("static/notics/" + fileName);
+        String absoluteFilePath = resource.getFile().getAbsolutePath();
 
         String fileExtension = getFileExtension(fileName);
         MediaType contentType = CONTENT_TYPE_MAP.getOrDefault(fileExtension.toLowerCase(),
@@ -104,8 +105,14 @@ public class NoticeServiceImp implements NoticeService {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, contentType.toString());
 
+        // Adding the absolute file path as a custom header
+        headers.add("X-File-Path", absoluteFilePath);
+        // Printing the absolute file path
+        System.out.println("Absolute file path: " + absoluteFilePath);
+
         return ResponseEntity.ok().headers(headers).body(resource);
     }
+
 
     private String getFileExtension(String fileName) {
         int lastDotIndex = fileName.lastIndexOf('.');
