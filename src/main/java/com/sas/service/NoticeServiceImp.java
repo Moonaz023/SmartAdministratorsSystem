@@ -31,7 +31,7 @@ public class NoticeServiceImp implements NoticeService {
     @Autowired
     private NoticeRepository noticeRepository;
 
-    public final String UPLOAD_DIR2 = new ClassPathResource("static/notics").getPath();
+    public final String UPLOAD_DIR2 = new ClassPathResource("static/notics/").getFile().getAbsolutePath();
 
     public NoticeServiceImp() throws IOException {
     }
