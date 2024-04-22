@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sas.entity.NoticeEntity;
 import com.sas.repository.NoticeRepository;
@@ -62,14 +63,16 @@ public class NoticeServiceImp implements NoticeService {
                 Files.copy(inputStream, uploadPath.resolve(originalFileName), StandardCopyOption.REPLACE_EXISTING);
             }
 
+            String uploadedFilePath = uploadPath.resolve(originalFileName).toString();
             System.out.println("Notice file uploaded successfully: " + originalFileName);
+            System.out.println("Uploaded file path: " + uploadedFilePath);
 
         } catch (IOException e) {
             e.printStackTrace();
-
         }
         noticeRepository.save(notice);
     }
+
 
     @Override
     public List<NoticeEntity> fetchNotice() {
